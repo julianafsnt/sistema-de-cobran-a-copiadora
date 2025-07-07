@@ -1,0 +1,74 @@
+print('* Bem-vindo(a) a copiadora da Juliana Fernandes *')
+def escolha_servico():
+    while True: #aqui o cliente estará escolhendo o serviço desejado que temos disponíveis
+        print('\nQual é o tipo de serviço desejado?')
+        print('DIG - digitalização.')
+        print('ICO - impressão colorida')
+        print('IPB - impressão preto e branco')
+        print('FOT - fotocópia')
+        escolha = input().upper()
+        if escolha in ['DIG', 'ICO', 'IPB', 'FOT']:
+            break
+        else:
+            print('Opção inválida, tente novamente com o tipo do serviço: (dig , ico , ipb ou fot)')
+        continue #repete o loop do serviço
+
+    if escolha == 'DIG':
+        valorservico = 1.10
+    elif escolha == 'ICO':
+        valorservico = 1.0
+    elif escolha == 'IPB':
+        valorservico = 0.40
+    else:
+        valorservico = 0.20
+    return valorservico
+
+def num_pagina():
+    while True:
+        Quant_paginas = input('Digite o número de páginas: ')
+        try:#garante a execussão do programa mesmo que seja inserido dados incorretamente
+            Quant_paginas = int(Quant_paginas)
+            if Quant_paginas > 0 and Quant_paginas <= 20000:
+                if Quant_paginas < 20: #aplicando o desconto de acordo com a quantidade
+                    paginas = Quant_paginas
+                if Quant_paginas >= 20 and Quant_paginas < 200:
+                    paginas = Quant_paginas - (0.15 * Quant_paginas) # desconto de 15% 'se' a quantidade for igual ou maior que 20 e menor que 200 paginas
+                elif Quant_paginas >= 200 and Quant_paginas <= 2000:
+                    paginas = Quant_paginas - (0.20 * Quant_paginas) # desconto de 20% 'se' a quantidade for igual ou maior que 200 e menor que 2.000 páginas
+                elif Quant_paginas >= 2000 and Quant_paginas <= 20000:
+                    paginas = Quant_paginas - (0.25 * Quant_paginas) # desconto de 25% 'se' a quantidade for igual ou maior que 2.000 e menor que 20.000 páginas
+            elif Quant_paginas > 20000:
+                print('Não aceitamos tantas páginas, nosso Máx. é de 20.000 por vez \nPor favor, entre com o número de páginas novamente.\n')
+                continue
+            else: # se não inserir corretamente a quantidade, uma mensagem de erro irá aparecer na tela solicitando que insira novamente de acordo com a quantidade aré 20.000
+                print('Por favor digite um numero valido')
+                continue
+        except ValueError: # caso o usuário insira algum valor incorreto,  mensagem
+            print('Por favor digite um numero valido')
+        return paginas
+
+def servico_extra(): #serviço adicional oferecido caso o cliente solicite
+     while True:
+                print('\nDeseja adicionar algum serviço?')
+                print('1 - Encadernação Simples   - R$ 15.00')
+                print('2 - Encadernação Capa Dura - R$ 40.00')
+                print('0 - Não desejo mais nada')
+                servico_extra = input ()
+                if servico_extra == '1':
+                    extra = 15
+                elif servico_extra == '2':
+                    extra = 40
+                elif servico_extra == '0':
+                    extra = 0
+                else:
+                    print('Por favor digite um valor valido!')
+                    continue
+                return extra
+
+servico = escolha_servico() #aqui mostra o valor de cada pagina por serviço
+num_pagina = num_pagina()   # desconto aplicado de acordo com a quantidade
+extra = servico_extra()     # valor adicional do serviço extra se for solicitado
+
+Total = (servico * num_pagina) + extra #valor final a ser calculado
+
+print(f'Total: R${Total:.2f} (serviço: {servico:.2f}) * páginas: {int(num_pagina)} + extra: R${extra:.2f})')
